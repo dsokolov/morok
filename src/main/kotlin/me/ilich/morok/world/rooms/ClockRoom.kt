@@ -8,7 +8,7 @@ class ClockRoom : Room() {
 
     val sdf = SimpleDateFormat("HH:mm")
 
-    override fun title(): String = "Clock room"
+    override fun preview(): String = "Clock room"
 
     override fun description(engine: Engine): String {
         val time = sdf.format(engine.time())

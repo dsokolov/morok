@@ -8,7 +8,7 @@ class SimpleRoom(
         private val description: String
 ) : Room() {
 
-    override fun title(): String = title
+    override fun preview(): String = title
 
     override fun description(engine: Engine): String = description
 

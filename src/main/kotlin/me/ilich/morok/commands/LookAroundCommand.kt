@@ -23,7 +23,7 @@ class LookAroundCommand : Command() {
                 Direction.W -> "W"
                 Direction.NW -> "NW"
             }
-            val title = it.value.title()
+            val title = it.value.preview()
             sb.append("$d : $title\n")
         }
         return Output(sb.toString())
