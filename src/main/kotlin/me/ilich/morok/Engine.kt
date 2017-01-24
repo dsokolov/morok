@@ -13,7 +13,7 @@ class Engine {
 
     private var working = true
     private val locations = mapOf(
-            Pair(0, 0) to ClockRoom(),
+            Pos(0,0) to ClockRoom(),
             Pair(1, 0) to SimpleRoom("2", "east"),
             Pair(-1, 0) to SimpleRoom("3", "west"),
             Pair(0, 1) to NorthRoom(),
