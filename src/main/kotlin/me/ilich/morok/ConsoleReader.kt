@@ -13,6 +13,11 @@ class ConsoleReader {
         callback(input)
     }
 
+    fun read(): String {
+        val input = br.readLine()
+        return input
+    }
+
     fun stop() {
         try {
             br.close()

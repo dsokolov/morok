@@ -1,7 +1,5 @@
 package me.ilich.morok.world
 
-import javafx.geometry.Pos
-
 enum class Direction(val x: Int, val y: Int) {
     N(0, 1),
     NE(1, 1),

@@ -2,20 +2,19 @@ package me.ilich.morok
 
 import me.ilich.morok.commands.Command
 import me.ilich.morok.world.*
-import me.ilich.morok.world.rooms.ClockRoom
-import me.ilich.morok.world.rooms.NorthRoom
-import me.ilich.morok.world.rooms.SimpleRoom
-import me.ilich.morok.world.rooms.SouthRoom
+import me.ilich.morok.demo.ClockRoom
+import me.ilich.morok.demo.NorthRoom
+import me.ilich.morok.demo.SouthRoom
 import java.util.*
 import javax.xml.stream.Location
 
-class Engine {
+class Engine(
+        private val world: World
+) {
 
     private var working = true
     private val locations = mapOf(
-            Pos(0,0) to ClockRoom(),
-            Pair(1, 0) to SimpleRoom("2", "east"),
-            Pair(-1, 0) to SimpleRoom("3", "west"),
+            Pos(0, 0) to ClockRoom(),
             Pair(0, 1) to NorthRoom(),
             Pair(0, -1) to SouthRoom()
     )
@@ -24,7 +23,7 @@ class Engine {
 
     fun currentLocation(): Room =
             locations.getOrElse(playerPosition) {
-                SimpleRoom("void", "void")
+                throw  RuntimeException()
             }
 
     fun canMove(x: Int, y: Int): Boolean {
@@ -38,6 +37,9 @@ class Engine {
     }
 
     fun tick(input: Input): Output {
+/*        val roomId = world.currentRoomId()
+        val room = world.roomById(roomId)
+        val roomDescription = room.description(this)*/
         val command = Command.create(this, input)
         val output = command.execute(this, input)
         return output

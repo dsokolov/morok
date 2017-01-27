@@ -22,7 +22,7 @@ repositories {
     mavenCentral()
 }
 
-mainClassName = "me.ilich.morok.Morok"
+mainClassName = "me.ilich.morok2.Morok2"
 
 sourceSets {
     main {
@@ -40,7 +40,7 @@ sourceSets {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'me.ilich.morok.Morok'
+        attributes 'Main-Class': 'me.ilich.morok2.Morok2'
     }
 }
 

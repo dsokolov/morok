@@ -6,4 +6,3 @@ abstract class Room {
     abstract fun preview(): String
     abstract fun description(engine: Engine): String
 }
-

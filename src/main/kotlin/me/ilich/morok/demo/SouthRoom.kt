@@ -1,4 +1,4 @@
-package me.ilich.morok.world.rooms
+package me.ilich.morok.demo
 
 import me.ilich.morok.Engine
 import me.ilich.morok.world.Room
