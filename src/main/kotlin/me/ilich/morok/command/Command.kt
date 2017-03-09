@@ -1,4 +1,6 @@
-package me.ilich.morok
+package me.ilich.morok.command
+
+import me.ilich.morok.action.Action
 
 open class Command(
         val key: String,

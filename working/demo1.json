@@ -1,0 +1,16 @@
+{
+  "id": "demo1",
+  "title": "Демка",
+  "start_scene_id": "room1",
+  "scenes": [
+    {
+      "id": "room1",
+      "title": "Комната 1",
+      "description": [
+        "Описание комнаты 1"
+      ],
+      "commands": [
+      ]
+    }
+  ]
+}

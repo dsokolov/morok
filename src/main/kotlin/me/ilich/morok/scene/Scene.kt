@@ -1,6 +1,8 @@
-package me.ilich.morok
+package me.ilich.morok.scene
 
-data class Scene(
+import me.ilich.morok.command.Command
+
+open class Scene(
         val id: String,
         val title: String,
         val description: List<String>,

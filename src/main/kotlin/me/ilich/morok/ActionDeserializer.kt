@@ -3,6 +3,9 @@ package me.ilich.morok
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
+import me.ilich.morok.action.Action
+import me.ilich.morok.action.EchoAction
+import me.ilich.morok.action.GotoAction
 import java.lang.reflect.Type
 
 class ActionDeserializer : JsonDeserializer<Action> {
@@ -15,7 +18,14 @@ class ActionDeserializer : JsonDeserializer<Action> {
                 GotoAction(sceneId)
             }
             "echo" -> {
-                val text = json.asJsonObject["text"].asString
+                val textJsonObject = json.asJsonObject["text"]
+                val text = if (textJsonObject.isJsonArray) {
+                    textJsonObject.asJsonArray.map { it.asString }
+                } else if (textJsonObject.isJsonPrimitive) {
+                    listOf(textJsonObject.asString)
+                } else {
+                    emptyList()
+                }
                 EchoAction(text)
             }
             else -> TODO(type)
