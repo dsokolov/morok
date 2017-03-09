@@ -2,7 +2,7 @@ group 'me.ilich'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.0.6'
+    ext.kotlin_version = '1.1.0'
 
     repositories {
         mavenCentral()
@@ -22,7 +22,7 @@ repositories {
     mavenCentral()
 }
 
-mainClassName = "me.ilich.morok2.Morok2"
+mainClassName = "me.ilich.morok.App"
 
 sourceSets {
     main {
@@ -40,11 +40,12 @@ sourceSets {
 
 jar {
     manifest {
-        attributes 'Main-Class': 'me.ilich.morok2.Morok2'
+        attributes 'Main-Class': 'me.ilich.morok.App'
     }
 }
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    compile 'com.google.code.gson:gson:2.8.0'
     testCompile group: 'junit', name: 'junit', version: '4.11'
 }
