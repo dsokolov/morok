@@ -1,10 +1,11 @@
-package me.ilich.morok.scene
+package me.ilich.morok.system
 
 import me.ilich.morok.Parser
-import me.ilich.morok.action.ExitAction
-import me.ilich.morok.action.LoadModuleAction
-import me.ilich.morok.command.Command
-import me.ilich.morok.module.Module
+import me.ilich.morok.system.PromptExitScene
+import me.ilich.morok.system.LoadModuleAction
+import me.ilich.morok.engine.Command
+import me.ilich.morok.engine.Module
+import me.ilich.morok.engine.Scene
 import java.io.File
 
 class SelectModuleScene : Scene(
@@ -32,7 +33,7 @@ class SelectModuleScene : Scene(
                         val title = "${module?.title} ($fileName)"
                         Command("$index", title, listOf(LoadModuleAction(file)))
                     }
-            val result = modules + Command("0", "Выход", listOf(ExitAction()))
+            val result = modules + Command("0", "Выход", listOf(StopGameAction()))
             return result
         }
     }

@@ -1,7 +1,7 @@
-package me.ilich.morok.module
+package me.ilich.morok.engine
 
 import com.google.gson.annotations.SerializedName
-import me.ilich.morok.scene.Scene
+import me.ilich.morok.engine.Scene
 
 open class Module(
         val title: String,

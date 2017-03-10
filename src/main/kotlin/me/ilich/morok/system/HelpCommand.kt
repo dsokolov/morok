@@ -1,6 +1,7 @@
-package me.ilich.morok.command
+package me.ilich.morok.system
 
-import me.ilich.morok.action.HelpAction
+import me.ilich.morok.system.HelpAction
+import me.ilich.morok.engine.Command
 
 class HelpCommand : Command(
         "СПРАВКА",

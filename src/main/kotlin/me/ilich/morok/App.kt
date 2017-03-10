@@ -1,32 +1,34 @@
 package me.ilich.morok
 
-import me.ilich.morok.command.ExitCommand
-import me.ilich.morok.command.HelpCommand
-import me.ilich.morok.module.Module
-import me.ilich.morok.module.SystemModule
-import me.ilich.morok.scene.Scene
+import me.ilich.morok.system.PromptExitCommand
+import me.ilich.morok.system.HelpCommand
+import me.ilich.morok.engine.Module
+import me.ilich.morok.system.SystemModule
+import me.ilich.morok.engine.Scene
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.util.*
 
 object App : Controllable {
 
     private val generalCommamds = listOf(
-            ExitCommand(),
+            PromptExitCommand(),
             HelpCommand()
     )
     private var working = true
     private var renderSceneTitle = true
     private var renderSceneDescription = true
     private var renderSceneCommands = true
-    private var currentModule: Module = SystemModule()
-    private var currentSceneId: String = currentModule.startSceneId
+    private lateinit var currentModule: Module
+    private val sceneIdStack = Stack<String>()
 
     @JvmStatic fun main(vararg arg: String) {
         println("START ver 0.1")
-
+        setModule(SystemModule())
         val userInput = BufferedReader(InputStreamReader(System.`in`))
         println()
         while (working) {
+            val currentSceneId = sceneIdStack.peek()
             val scene = currentModule.scenes.find { scene -> scene.id == currentSceneId }
             if (scene == null) {
                 println("Scene $currentSceneId not found.")
@@ -64,7 +66,11 @@ object App : Controllable {
         if (userInput.isBlank()) {
             println()
         } else {
-            val suitableCommands = (scene.commands + generalCommamds).filter { command -> command.key.startsWith(userInput, true) }
+            val sceneCommands = when (scene.availableCommands) {
+                Scene.AvailableCommands.ALL -> (scene.commands + generalCommamds)
+                Scene.AvailableCommands.ONLY_DECLARED -> scene.commands
+            }
+            val suitableCommands = sceneCommands.filter { command -> command.key.startsWith(userInput, true) }
             when (suitableCommands.size) {
                 0 -> println("Что такое '$input'?")
                 1 -> {
@@ -77,14 +83,30 @@ object App : Controllable {
 
     override fun setModule(module: Module) {
         currentModule = module
-        currentSceneId = module.startSceneId
+        sceneIdStack.clear()
+        sceneIdStack.push(currentModule.startSceneId)
         renderSceneTitle = true
         renderSceneDescription = true
         renderSceneCommands = true
     }
 
-    override fun setSceneId(sceneId: String) {
-        currentSceneId = sceneId
+    override fun sceneGoto(sceneId: String) {
+        sceneIdStack.pop()
+        sceneIdStack.push(sceneId)
+        renderSceneTitle = true
+        renderSceneDescription = true
+        renderSceneCommands = true
+    }
+
+    override fun sceneGosub(sceneId: String) {
+        sceneIdStack.push(sceneId)
+        renderSceneTitle = true
+        renderSceneDescription = true
+        renderSceneCommands = true
+    }
+
+    override fun sceneReturn() {
+        sceneIdStack.pop()
         renderSceneTitle = true
         renderSceneDescription = true
         renderSceneCommands = true

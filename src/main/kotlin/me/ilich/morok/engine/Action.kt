@@ -1,10 +1,8 @@
-package me.ilich.morok.action
+package me.ilich.morok.engine
 
 import me.ilich.morok.Controllable
 
-abstract class Action(
-        val type: String
-) {
+abstract class Action {
 
     abstract fun execute(controllable: Controllable)
 

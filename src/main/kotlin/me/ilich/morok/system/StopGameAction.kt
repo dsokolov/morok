@@ -1,9 +1,12 @@
-package me.ilich.morok.action
+package me.ilich.morok.system
 
 import me.ilich.morok.Controllable
+import me.ilich.morok.engine.Action
 
-class ExitAction : Action("exit") {
+class StopGameAction : Action() {
+
     override fun execute(controllable: Controllable) {
         controllable.stop()
     }
+
 }

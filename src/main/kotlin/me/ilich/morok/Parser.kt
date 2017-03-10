@@ -2,9 +2,9 @@ package me.ilich.morok
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import me.ilich.morok.action.Action
-import me.ilich.morok.module.Module
-import me.ilich.morok.scene.Scene
+import me.ilich.morok.engine.Action
+import me.ilich.morok.engine.Module
+import me.ilich.morok.engine.Scene
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader

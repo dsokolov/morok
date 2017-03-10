@@ -3,9 +3,9 @@ package me.ilich.morok
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
-import me.ilich.morok.action.Action
-import me.ilich.morok.action.EchoAction
-import me.ilich.morok.action.GotoAction
+import me.ilich.morok.engine.Action
+import me.ilich.morok.system.EchoAction
+import me.ilich.morok.system.GotoAction
 import java.lang.reflect.Type
 
 class ActionDeserializer : JsonDeserializer<Action> {

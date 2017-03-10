@@ -3,8 +3,8 @@ package me.ilich.morok
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
-import me.ilich.morok.module.Module
-import me.ilich.morok.scene.Scene
+import me.ilich.morok.engine.Module
+import me.ilich.morok.engine.Scene
 import java.lang.reflect.Type
 
 class ModuleDeserializer : JsonDeserializer<Module> {
