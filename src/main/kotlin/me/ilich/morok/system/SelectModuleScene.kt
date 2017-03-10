@@ -1,6 +1,6 @@
 package me.ilich.morok.system
 
-import me.ilich.morok.Parser
+import me.ilich.morok.parser.Parser
 import me.ilich.morok.system.PromptExitScene
 import me.ilich.morok.system.LoadModuleAction
 import me.ilich.morok.engine.Command
@@ -12,7 +12,8 @@ class SelectModuleScene : Scene(
         id = "system_select_module",
         title = "MorokEngine 0.1",
         description = listOf("Разработка и отладка"),
-        commands = commands()
+        commands = commands(),
+        availableCommands = AvailableCommands.ONLY_DECLARED
 ) {
 
     companion object {

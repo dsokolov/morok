@@ -1,19 +1,22 @@
 package me.ilich.morok
 
-import me.ilich.morok.system.PromptExitCommand
-import me.ilich.morok.system.HelpCommand
 import me.ilich.morok.engine.Module
-import me.ilich.morok.system.SystemModule
 import me.ilich.morok.engine.Scene
+import me.ilich.morok.system.*
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.*
 
 object App : Controllable {
 
-    private val generalCommamds = listOf(
+    private val generalCommands = listOf(
             PromptExitCommand(),
-            HelpCommand()
+            HelpCommand(),
+            InventoryCommand()
+    )
+    private val generalScenes = listOf(
+            PromptExitScene(),
+            InventoryShowScene()
     )
     private var working = true
     private var renderSceneTitle = true
@@ -29,7 +32,8 @@ object App : Controllable {
         println()
         while (working) {
             val currentSceneId = sceneIdStack.peek()
-            val scene = currentModule.scenes.find { scene -> scene.id == currentSceneId }
+            val allScenes = generalScenes + currentModule.scenes
+            val scene = allScenes.find { scene -> scene.id == currentSceneId }
             if (scene == null) {
                 println("Scene $currentSceneId not found.")
                 working = false
@@ -67,7 +71,7 @@ object App : Controllable {
             println()
         } else {
             val sceneCommands = when (scene.availableCommands) {
-                Scene.AvailableCommands.ALL -> (scene.commands + generalCommamds)
+                Scene.AvailableCommands.ALL -> (scene.commands + generalCommands)
                 Scene.AvailableCommands.ONLY_DECLARED -> scene.commands
             }
             val suitableCommands = sceneCommands.filter { command -> command.key.startsWith(userInput, true) }

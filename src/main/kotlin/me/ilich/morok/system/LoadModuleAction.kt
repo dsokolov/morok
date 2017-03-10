@@ -1,11 +1,11 @@
 package me.ilich.morok.system
 
 import me.ilich.morok.Controllable
-import me.ilich.morok.Parser
 import me.ilich.morok.engine.Action
+import me.ilich.morok.engine.Item
 import me.ilich.morok.engine.Module
 import me.ilich.morok.engine.Scene
-import me.ilich.morok.system.PromptExitScene
+import me.ilich.morok.parser.Parser
 import java.io.File
 
 class LoadModuleAction(val moduleFile: File) : Action() {
@@ -15,7 +15,6 @@ class LoadModuleAction(val moduleFile: File) : Action() {
         val parentDir = moduleFile.parentFile
         val includeModules = mainModule.include.map { moduleFileName ->
             val includeModuleFile = File(parentDir, moduleFileName)
-            println(includeModuleFile.absoluteFile)
             Parser.parse(includeModuleFile)
         }
         val scenes = mutableListOf<Scene>()
@@ -23,11 +22,14 @@ class LoadModuleAction(val moduleFile: File) : Action() {
         includeModules.forEach { module ->
             scenes.addAll(module.scenes)
         }
-        scenes.add(PromptExitScene())
+        val items = includeModules.fold(emptyList<Item>()) { total, current ->
+            total + current.items
+        }
         val resultModule = Module(
                 title = mainModule.title,
                 startSceneId = mainModule.startSceneId,
                 scenes = scenes,
+                items = items,
                 include = emptyList()
         )
         controllable.setModule(resultModule)

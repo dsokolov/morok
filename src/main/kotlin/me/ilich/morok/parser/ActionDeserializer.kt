@@ -1,4 +1,4 @@
-package me.ilich.morok
+package me.ilich.morok.parser
 
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer

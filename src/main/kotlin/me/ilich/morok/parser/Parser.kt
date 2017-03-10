@@ -1,4 +1,4 @@
-package me.ilich.morok
+package me.ilich.morok.parser
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -13,6 +13,7 @@ object Parser {
 
     private val gson: Gson = GsonBuilder().
             registerTypeAdapter(Module::class.java, ModuleDeserializer()).
+            registerTypeAdapter(Scene::class.java, SceneDeserializer()).
             registerTypeAdapter(Action::class.java, ActionDeserializer()).
             create()
 

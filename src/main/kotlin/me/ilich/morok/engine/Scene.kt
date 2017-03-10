@@ -5,7 +5,8 @@ open class Scene(
         val title: String,
         val description: List<String>,
         val commands: List<Command>,
-        val availableCommands: AvailableCommands = Scene.AvailableCommands.ALL
+        val availableCommands: AvailableCommands = Scene.AvailableCommands.ALL,
+        val player: Player = Player()
 ) {
 
     enum class AvailableCommands {

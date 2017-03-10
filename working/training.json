@@ -2,8 +2,14 @@
   "id": "training_center",
   "title": "Ц.И.П.О. (Центр испытаний и предварительного обучения)",
   "start_scene_id": "locker_room",
+  "player": {
+    "inventory": [
+      "fingerbox"
+    ]
+  },
   "include": [
     "training/locker_room.json",
-    "training/training_room.json"
+    "training/training_room.json",
+    "training/items.json"
   ]
 }
