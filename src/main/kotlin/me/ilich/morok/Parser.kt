@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import me.ilich.morok.action.Action
 import me.ilich.morok.module.Module
+import me.ilich.morok.scene.Scene
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
@@ -11,6 +12,7 @@ import java.io.FileReader
 object Parser {
 
     private val gson: Gson = GsonBuilder().
+            registerTypeAdapter(Module::class.java, ModuleDeserializer()).
             registerTypeAdapter(Action::class.java, ActionDeserializer()).
             create()
 
