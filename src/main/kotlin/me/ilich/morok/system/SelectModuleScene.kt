@@ -6,10 +6,11 @@ import me.ilich.morok.system.LoadModuleAction
 import me.ilich.morok.engine.Command
 import me.ilich.morok.engine.Module
 import me.ilich.morok.engine.Scene
+import me.ilich.morok.parser.ModuleHeader
 import java.io.File
 
 class SelectModuleScene : Scene(
-        id = "system_select_module",
+        id = ID,
         title = "MorokEngine 0.1",
         description = listOf("Разработка и отладка"),
         commands = commands(),
@@ -17,6 +18,9 @@ class SelectModuleScene : Scene(
 ) {
 
     companion object {
+
+        const val ID = "system_select_module"
+
         fun commands(): List<Command> {
             val rootDir = File(System.getProperty("user.dir"))
             val files = rootDir.listFiles()
@@ -25,9 +29,9 @@ class SelectModuleScene : Scene(
                     mapIndexed { i, file ->
                         val index = i + 1
                         val fileName = file.name
-                        var module: Module? = null
+                        var module: ModuleHeader? = null
                         try {
-                            module = Parser.parse(file)
+                            module = Parser.parseHeader(file)
                         } catch (e: Throwable) {
                             e.printStackTrace()
                         }

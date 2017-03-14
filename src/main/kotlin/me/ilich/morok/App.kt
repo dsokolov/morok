@@ -9,42 +9,35 @@ import java.util.*
 
 object App : Controllable {
 
+
+    private val dataSource: DataSource = InMemoryDataSource()
     private val generalCommands = listOf(
             PromptExitCommand(),
             HelpCommand(),
             InventoryCommand()
     )
-    private val generalScenes = listOf(
-            PromptExitScene(),
-            InventoryShowScene()
-    )
     private var working = true
     private var renderSceneTitle = true
     private var renderSceneDescription = true
     private var renderSceneCommands = true
-    private lateinit var currentModule: Module
     private val sceneIdStack = Stack<String>()
 
     @JvmStatic fun main(vararg arg: String) {
         println("START ver 0.1")
-        setModule(SystemModule())
+        //setModule(SystemModule())
+        reload(SelectModuleScene.ID)
         val userInput = BufferedReader(InputStreamReader(System.`in`))
         println()
         while (working) {
             val currentSceneId = sceneIdStack.peek()
-            val allScenes = generalScenes + currentModule.scenes
-            val scene = allScenes.find { scene -> scene.id == currentSceneId }
-            if (scene == null) {
-                println("Scene $currentSceneId not found.")
-                working = false
-            } else {
-                renderScene(scene)
-                val input = userInput.readLine()
-                processUserInput(scene, input)
-                println()
-            }
+            /*val allScenes = generalScenes + currentModule.scenes
+            val scene = allScenes.find { scene -> scene.id == currentSceneId }*/
+            val scene = dataSource.sceneById(currentSceneId)
+            renderScene(scene)
+            val input = userInput.readLine()
+            processUserInput(scene, input)
+            println()
         }
-
         println("FINISH")
     }
 
@@ -85,14 +78,22 @@ object App : Controllable {
         }
     }
 
-    override fun setModule(module: Module) {
+    override fun reload(sceneId: String) {
+        sceneIdStack.clear()
+        sceneIdStack.push(sceneId)
+        renderSceneTitle = true
+        renderSceneDescription = true
+        renderSceneCommands = true
+    }
+
+/*    override fun setModule(module: Module) {
         currentModule = module
         sceneIdStack.clear()
         sceneIdStack.push(currentModule.startSceneId)
         renderSceneTitle = true
         renderSceneDescription = true
         renderSceneCommands = true
-    }
+    }*/
 
     override fun sceneGoto(sceneId: String) {
         sceneIdStack.pop()
@@ -123,5 +124,8 @@ object App : Controllable {
     override fun echo(text: String) {
         println(text)
     }
+
+    override fun dataSource(): DataSource = dataSource
+
 
 }

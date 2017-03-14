@@ -11,11 +11,11 @@ import java.lang.reflect.Type
 class ModuleDeserializer : JsonDeserializer<Module> {
 
     override fun deserialize(json: JsonElement, typeOfT: Type, context: JsonDeserializationContext): Module {
-        val title = json.asJsonObject["title"]?.asString ?: ""
-        val startSceneId = json.asJsonObject["start_scene_id"]?.asString ?: ""
-        val include = json.asJsonObject["include"]?.asJsonArray?.map { it.asString } ?: emptyList()
-        val scenes = json.asJsonObject["scenes"]?.asJsonArray?.map { context.deserialize<Scene>(it, Scene::class.java) } ?: emptyList()
-        val items = json.asJsonObject["items"]?.asJsonArray?.map { context.deserialize<Item>(it, Item::class.java) } ?: emptyList()
+        val title = json.asJsonObject["title"]?.asString
+        val startSceneId = json.asJsonObject["start_scene_id"]?.asString
+        val include = json.asJsonObject["include"]?.asJsonArray?.map { it.asString }
+        val scenes = json.asJsonObject["scenes"]?.asJsonArray?.map { context.deserialize<Scene>(it, Scene::class.java) }
+        val items = json.asJsonObject["items"]?.asJsonArray?.map { context.deserialize<Item>(it, Item::class.java) }
         return Module(
                 title = title,
                 startSceneId = startSceneId,

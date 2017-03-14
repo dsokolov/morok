@@ -1,9 +1,9 @@
 package me.ilich.morok.engine
 
 open class Module(
-        val title: String,
-        val startSceneId: String,
-        val scenes: List<Scene>,
-        val items: List<Item> = emptyList(),
-        val include: List<String> = emptyList()
+        val title: String? = null,
+        val startSceneId: String? = null,
+        val scenes: List<Scene>? = null,
+        val items: List<Item>? = null,
+        val include: List<String>? = null
 )

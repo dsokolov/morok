@@ -3,36 +3,46 @@ package me.ilich.morok.system
 import me.ilich.morok.Controllable
 import me.ilich.morok.engine.Action
 import me.ilich.morok.engine.Item
-import me.ilich.morok.engine.Module
 import me.ilich.morok.engine.Scene
 import me.ilich.morok.parser.Parser
 import java.io.File
+import java.util.*
 
 class LoadModuleAction(val moduleFile: File) : Action() {
 
     override fun execute(controllable: Controllable) {
-        val mainModule = Parser.parse(moduleFile)
+        val includes = LinkedList<File>()
         val parentDir = moduleFile.parentFile
-        val includeModules = mainModule.include.map { moduleFileName ->
-            val includeModuleFile = File(parentDir, moduleFileName)
-            Parser.parse(includeModuleFile)
+        val dataSource = controllable.dataSource()
+        dataSource.clear()
+        var sceneId: String? = null
+        val listener = object : Parser.Listener {
+
+            override fun onStartSceneId(startSceneId: String) {
+                sceneId = startSceneId
+            }
+
+            override fun onInclude(moduleFileName: String) {
+                includes.add(File(parentDir, moduleFileName))
+            }
+
+            override fun onScene(scene: Scene) {
+                dataSource.sceneAdd(scene)
+            }
+
+            override fun onItem(item: Item) {
+                //TODO
+            }
         }
-        val scenes = mutableListOf<Scene>()
-        scenes.addAll(mainModule.scenes)
-        includeModules.forEach { module ->
-            scenes.addAll(module.scenes)
+        includes.add(moduleFile)
+        while (includes.isNotEmpty()) {
+            val fn = includes.first
+            Parser.parse(fn, listener)
+            includes.remove(fn)
         }
-        val items = includeModules.fold(emptyList<Item>()) { total, current ->
-            total + current.items
+        sceneId?.let {
+            controllable.reload(it)
         }
-        val resultModule = Module(
-                title = mainModule.title,
-                startSceneId = mainModule.startSceneId,
-                scenes = scenes,
-                items = items,
-                include = emptyList()
-        )
-        controllable.setModule(resultModule)
     }
 
 }
