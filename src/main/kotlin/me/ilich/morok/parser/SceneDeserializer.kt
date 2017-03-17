@@ -13,13 +13,14 @@ class SceneDeserializer : JsonDeserializer<Scene> {
         val title = json.asJsonObject["title"]?.asString ?: ""
         val description = json.asJsonObject["description"]?.asJsonArray?.map { it.asString } ?: emptyList()
         val commands = json.asJsonObject["commands"]?.asJsonArray?.map { context.deserialize<Command>(it, Command::class.java) } ?: emptyList()
-        return Scene(
+        val items = json.asJsonObject["items"]?.asJsonArray?.map { it.asString } ?: emptyList()
+        return SimpleScene(
                 id = id,
                 title = title,
                 description = description,
                 availableCommands = Scene.AvailableCommands.ALL,
                 commands = commands,
-                player = Player()
+                itemIds = items
         )
     }
 

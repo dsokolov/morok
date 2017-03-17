@@ -1,5 +1,7 @@
 package me.ilich.morok
 
+import me.ilich.morok.engine.Item
+
 interface Controllable {
 
     fun sceneGoto(sceneId: String)
@@ -9,5 +11,6 @@ interface Controllable {
     fun echo(text: String)
     fun dataSource(): DataSource
     fun reload(sceneId: String)
+    fun inventory(): List<Item>
 
 }

@@ -1,21 +1,14 @@
 package me.ilich.morok.system
 
-import me.ilich.morok.parser.Parser
-import me.ilich.morok.system.PromptExitScene
-import me.ilich.morok.system.LoadModuleAction
+import me.ilich.morok.App
+import me.ilich.morok.Controllable
 import me.ilich.morok.engine.Command
-import me.ilich.morok.engine.Module
 import me.ilich.morok.engine.Scene
 import me.ilich.morok.parser.ModuleHeader
+import me.ilich.morok.parser.Parser
 import java.io.File
 
-class SelectModuleScene : Scene(
-        id = ID,
-        title = "MorokEngine 0.1",
-        description = listOf("Разработка и отладка"),
-        commands = commands(),
-        availableCommands = AvailableCommands.ONLY_DECLARED
-) {
+class SelectModuleScene : Scene() {
 
     companion object {
 
@@ -40,6 +33,18 @@ class SelectModuleScene : Scene(
                     }
             val result = modules + Command("0", "Выход", listOf(StopGameAction()))
             return result
+        }
+    }
+
+    override val id = ID
+    override val availableCommands = AvailableCommands.ONLY_DECLARED
+    override val commands = commands()
+    override val itemIds = emptyList<String>()
+
+    override fun render(controllable: Controllable, renderMode: App.RenderMode) {
+        println("Morok Engine")
+        commands.forEach { command ->
+            println("[${command.key}] ${command.title}")
         }
     }
 

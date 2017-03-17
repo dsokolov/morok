@@ -31,7 +31,7 @@ class LoadModuleAction(val moduleFile: File) : Action() {
             }
 
             override fun onItem(item: Item) {
-                //TODO
+                dataSource.itemAdd(item)
             }
         }
         includes.add(moduleFile)
